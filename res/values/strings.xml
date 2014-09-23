@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">mobileID</string>
+    <string name="action_settings">Action Settings</string>
+    <string name="send">Send</string>
+    <string name="clear">Clear</string>
+    <string name="toggleSave">Toggle\nSave/Clear</string>
+    <string name="idNumber">Input ID Number</string>
+
+</resources>
