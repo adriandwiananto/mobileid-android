@@ -93,8 +93,7 @@ public class GcmIntentService extends IntentService {
 
 	        Intent passIntent = new Intent();
 			passIntent.setClass(this, MainActivity.class);
-			passIntent.putExtra("info", gcmObj.getString("info"));            
-			passIntent.putExtra("OTP", gcmObj.getString("OTP"));
+			passIntent.putExtra("gcmMsg", gcmObj.toString());            
 		
 			PendingIntent contentIntent = PendingIntent.getActivity(this, 0, passIntent, PendingIntent.FLAG_UPDATE_CURRENT);
             
