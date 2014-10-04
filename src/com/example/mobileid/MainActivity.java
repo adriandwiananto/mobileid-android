@@ -372,6 +372,7 @@ public class MainActivity extends Activity implements OnClickListener {
 			fin.close();
 			
 			temp = temp.replace(" ", "");
+			temp = temp.replace("\n","").replace("\r", "");
 			String forHashCalc = temp.replace("/", "\\/");
 
 			Log.i(TAG,"KTP from file: "+forHashCalc);
