@@ -90,20 +90,31 @@ public class GcmIntentService extends IntentService {
 		try {
 			gcmObj = new JSONObject(extras.getString("message"));
 			String msg = gcmObj.getString("info");
-
+			
 	        Intent passIntent = new Intent();
 			passIntent.setClass(this, MainActivity.class);
 			passIntent.putExtra("gcmMsg", gcmObj.toString());            
 		
 			PendingIntent contentIntent = PendingIntent.getActivity(this, 0, passIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-            
-	        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
-	        .setSmallIcon(R.drawable.ic_launcher)
-	        .setContentTitle("mobileID")
-	        .setStyle(new NotificationCompat.BigTextStyle().bigText(msg))
-	        .setContentText(msg);
-	
-	        //default notification sound
+			NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
+			
+			if(msg.compareToIgnoreCase("websign") != 0){
+//		        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
+		        mBuilder
+				.setSmallIcon(R.drawable.ic_launcher)
+		        .setContentTitle("mobileID")
+		        .setStyle(new NotificationCompat.BigTextStyle().bigText(msg))
+		        .setContentText(msg);
+			} else {
+//				NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
+				mBuilder
+		        .setSmallIcon(R.drawable.ic_launcher)
+		        .setContentTitle("Web Sign - "+gcmObj.getString("title"))
+		        .setStyle(new NotificationCompat.BigTextStyle().bigText(msg))
+		        .setContentText(gcmObj.getString("content"));
+			}
+			
+			//default notification sound
 	        Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 	        mBuilder.setSound(alarmSound);
 	

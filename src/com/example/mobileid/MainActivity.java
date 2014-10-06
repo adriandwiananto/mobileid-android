@@ -449,13 +449,25 @@ public class MainActivity extends Activity implements OnClickListener {
 
 	                        Toast.makeText(getApplicationContext(),"Password Matched", Toast.LENGTH_SHORT).show();
 	                        
-	                        try {
-								String hmacInlineKtp = Converter.sha256Hmac(gcmObj.getString("OTP"), ktpHash);
-								Log.i(TAG,"hash ktp: "+ktpHash);
-								Log.i(TAG,"hmac ktp: "+hmacInlineKtp);
 
-								Network postData = new Network(getApplicationContext(), gcmObj, hmacInlineKtp);
-								postData.execute();
+	                        try {
+	                        	String info = gcmObj.getString("info"); 
+	                        	Log.i(TAG,"info: "+ info);
+	                        	if(info.compareTo("websign") != 0){
+									String hmacInlineKtp = Converter.sha256Hmac(gcmObj.getString("OTP"), ktpHash);
+									Log.i(TAG,"hash ktp: "+ktpHash);
+									Log.i(TAG,"hmac ktp: "+hmacInlineKtp);
+	
+									Network postData = new Network(getApplicationContext(), gcmObj, hmacInlineKtp);
+									postData.execute();
+		                        }else{
+		                        	String hmacData = Converter.sha256Hmac(gcmObj.getString("OTP"), gcmObj.getString("hash"));
+		                        	Log.i(TAG,"hash websign data: "+gcmObj.getString("hash"));
+		                        	Log.i(TAG,"otp: "+gcmObj.getString("OTP")+"\nhmac websign data: "+hmacData);
+		                        	
+		                        	Network postData = new Network(getApplicationContext(), gcmObj, hmacData, password);
+		                        	postData.execute();
+		                        }
 							} catch (Exception e) {
 								e.printStackTrace();
 							}

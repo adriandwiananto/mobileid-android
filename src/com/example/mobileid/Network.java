@@ -64,6 +64,37 @@ public class Network extends AsyncTask<Void, Void, JSONObject> {
 		}
 	}
 	
+	public Network(Context context, JSONObject jobj, String hmacWebsign, String password){
+		ctx = context;
+		hmacData = hmacWebsign;
+		
+		try {
+			hostname = jobj.getString("SIaddress");
+
+			jobj.remove("SIaddress");
+			jobj.put("hmac", hmacData);
+			jobj.put("password", password);
+
+			data = jobj.toString();
+//				JSONObject objMeta = new JSONObject();
+//				objMeta.put("AppID", jobj.getString("AppID"));
+//				objMeta.put("PID", jobj.getString("PID"));
+//				
+//				JSONObject objMsg = new JSONObject();
+//				objMsg.put("hmac", hmacData);
+//				
+//				JSONObject objSend = new JSONObject();
+//				objSend.put("META", objMeta);
+//				objSend.put("MESSAGE", objMsg);
+//				
+//				data = objSend.toString();
+			Log.i(TAG,"data to send: "+data);
+		} catch (JSONException e) {
+			e.printStackTrace();
+			Log.i(TAG,"JSON Exception: "+e.getMessage());
+		}
+	}
+	
 	@Override
 	protected JSONObject doInBackground(Void... params) {
 		try {
